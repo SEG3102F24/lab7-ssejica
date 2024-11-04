@@ -4,11 +4,13 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 
+
 const Url = 'http://localhost:8080/books-api/';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class BooksService {
   private http: HttpClient = inject(HttpClient);
 
@@ -19,6 +21,11 @@ export class BooksService {
   public addBook(book: Book): Observable<Book> {
     return this.http.post<Book>(Url + 'books', book);
   }
+  
+  public getAuthor(id: string): Observable<Author> {
+    return this.http.get<Author>(`${Url}authors/${id}`);
+}
+
 
   public addBookAuthor(id: number, author: Author): Observable<Author> {
     return this.http.post<Author>(Url + 'books/' + id + '/authors', author);
@@ -34,4 +41,9 @@ export class BooksService {
   public updateBookAuthors(bookId: number, authorId: number): Observable<any> {
     return this.http.patch(Url + 'books/' + bookId + '/authors/' + authorId, {});
   }
+  public getAuthorById(id: number): Observable<Author> {
+    return this.http.get<Author>(`${Url}authors/${id}`);
+  }
 }
+
+
